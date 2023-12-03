@@ -1,1 +1,1 @@
-![Tests Status Badge](https://github.com/Levatius/advent-of-code-2023/actions/workflows/python-app.yml/badge.svg)
+![Tests Status Badge](https://github.com/Levatius/advent-of-code-2023/actions/workflows/python-tests.yml/badge.svg)
