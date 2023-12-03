@@ -2,7 +2,7 @@ import unittest
 
 from aocd import get_data
 
-from day_03 import part_1, part_2
+from src.day_03 import part_1, part_2
 
 
 def get_example():
