@@ -1,5 +1,3 @@
-from aocd import get_data
-
 DIGIT_WORDS = {
     "one": "1",
     "two": "2",
@@ -28,14 +26,4 @@ def part_x(lines, digit_words):
         first_digit = find_digit(line, digit_words, search_func=str.find, evaluation_func=min)
         last_digit = find_digit(line, digit_words, search_func=str.rfind, evaluation_func=max)
         total += int(first_digit + last_digit)
-    print(total)
-
-
-def main():
-    lines = get_data(day=1, year=2023).splitlines()
-    part_x(lines, digit_words=DIGIT_WORDS.values())
-    part_x(lines, digit_words=[*DIGIT_WORDS.keys(), *DIGIT_WORDS.values()])
-
-
-if __name__ == "__main__":
-    main()
+    return total
