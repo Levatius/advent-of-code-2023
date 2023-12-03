@@ -64,9 +64,9 @@ def get_parts_and_gizmos(lines):
     return parts, gizmos
 
 
-def check_adjacent(part, gizmo, max_part_number=3):
-    # Returns False quickly when far apart, assumes max part number of 3 digits
-    if linalg.norm(part.positions[0] - gizmo.position, ord=1) > max_part_number + 1:
+def check_adjacent(part, gizmo, part_number_max_digits=3):
+    # Returns False quickly when far apart, assumes part numbers have a max of 3 digits
+    if linalg.norm(part.positions[0] - gizmo.position, ord=1) > part_number_max_digits + 1:
         return False
     # Otherwise, check thoroughly for adjacency
     for position in part.positions:
