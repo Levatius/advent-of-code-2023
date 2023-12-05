@@ -1,6 +1,6 @@
 import itertools
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from numpy import array, array_equal, linalg
 
@@ -17,14 +17,13 @@ class Part:
         return False
 
 
+@dataclass
 class Gizmo:
     symbol: str
     position: array
-    boundary_positions: list[array]
+    boundary_positions: list[array] = field(init=False)
 
-    def __init__(self, symbol, position):
-        self.symbol = symbol
-        self.position = position
+    def __post_init__(self):
         self.boundary_positions = self._get_boundary_positions()
 
     @property
