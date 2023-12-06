@@ -1,4 +1,5 @@
 import functools
+import math
 import operator
 import re
 from dataclasses import dataclass
@@ -9,17 +10,12 @@ class Race:
     time: int
     record_distance: int
 
-    def get_distance_travelled(self, charge_time):
-        speed = charge_time
-        return (self.time - charge_time) * speed
-
     def get_total_winning_races(self):
-        total = 0
-        for charge_time in range(1, self.time):
-            distance_travelled = self.get_distance_travelled(charge_time)
-            if distance_travelled > self.record_distance:
-                total += 1
-        return total
+        # Quadratic formula to solve (time - charge_time) * charge_time - record_distance > 0
+        numerators = [self.time - i * math.sqrt(self.time ** 2 - 4 * self.record_distance) for i in (1, -1)]
+        lower_bound = math.floor(numerators[0] / 2)
+        upper_bound = math.ceil(numerators[1] / 2)
+        return upper_bound - lower_bound - 1
 
 
 def get_races(lines, part):
