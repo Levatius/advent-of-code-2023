@@ -29,8 +29,8 @@ class Hand:
         return cls(cards=list(cards), bid=int(bid))
 
     @staticmethod
-    def _get_hand_type(ordered_counts, joker_count):
-        match ordered_counts[0] + joker_count:
+    def _get_hand_type(ordered_counts):
+        match ordered_counts[0]:
             case 5:
                 return HandType.FIVE_OF_A_KIND
             case 4:
@@ -60,8 +60,10 @@ class Hand:
         counts = Counter(self.cards)
         joker_count = counts.pop("j") if ("j" in counts and counts.get("j") != 5) else 0
         ordered_counts = [count for _, count in counts.most_common()]
+        # Add the jokers to the most prevalent count
+        ordered_counts[0] += joker_count
 
-        hand_type = self._get_hand_type(ordered_counts, joker_count)
+        hand_type = self._get_hand_type(ordered_counts)
 
         # Concatenate into a large number that guarantees the hands can be ranked correctly:
         hand_type_strength = str(hand_type.value)
