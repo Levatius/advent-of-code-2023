@@ -20,7 +20,7 @@ def get_input(part):
     return races
 
 
-class TestDay05(unittest.TestCase):
+class TestDay06(unittest.TestCase):
     def test__part_1_example(self):
         races = get_example(part=1)
         assert part_x(races) == 288

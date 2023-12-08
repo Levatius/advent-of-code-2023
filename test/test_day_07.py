@@ -23,7 +23,7 @@ def get_input(part):
     return hands
 
 
-class TestDay04(unittest.TestCase):
+class TestDay07(unittest.TestCase):
     def test__part_1_example(self):
         hands = get_example(part=1)
         assert part_x(hands) == 6440
