@@ -83,14 +83,14 @@ def part_2(graph):
         for node_a, node_b in itertools.pairwise(line):
             pipe_a = graph.nodes[node_a]["pipe"]
             pipe_b = graph.nodes[node_b]["pipe"]
-            # Case 1: U-Turn, skip
+            # Case 1: U-Turn ┗┉┉┉┛ or ┏┉┉┉┓, just skip through
             if (pipe_a == "L" and pipe_b == "J") or (pipe_a == "F" and pipe_b == "7"):
                 continue
-            # Case 2: Zig-Zag, flip and skip
+            # Case 2: Zig-Zag ┗┉┉┉┓ or ┏┉┉┉┛, flip inside flag and skip through
             elif (pipe_a == "L" and pipe_b == "7") or (pipe_a == "F" and pipe_b == "J"):
                 inside = not inside
                 continue
-            # Case 3: Wall, flip
+            # Case 3: Wall ┃, just flip inside flag
             elif pipe_a == "|":
                 inside = not inside
             if inside:
