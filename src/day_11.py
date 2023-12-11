@@ -1,6 +1,7 @@
 import itertools
 
-from numpy import array, linalg
+from numpy import array
+from numpy.linalg import norm
 
 
 def get_galaxies(starmap):
@@ -12,27 +13,20 @@ def get_galaxies(starmap):
     return galaxies
 
 
-def expand_galaxies(galaxies, age):
-    expanded_galaxies = set()
-    dimensions = (0, 1)
-    populated = [{galaxy[i] for galaxy in galaxies} for i in dimensions]
-    for galaxy in galaxies:
-        expanded_pos = []
-        for i in dimensions:
-            pos_i = galaxy[i]
-            delta_i = pos_i - sum(1 for pop_i in populated[i] if pop_i < pos_i)
-            expanded_pos_i = pos_i + (age - 1) * delta_i
-            expanded_pos.append(expanded_pos_i)
-        expanded_galaxies.add(tuple(expanded_pos))
-    return expanded_galaxies
+def get_expansion_rate(galaxies):
+    expansion_rate = 0
+    for i in (0, 1):
+        populated = {galaxy[i] for galaxy in galaxies}
+        voids = {k for k in range(min(populated), max(populated) + 1)} - populated
+        for void in voids:
+            less_than_void = sum(1 for galaxy in galaxies if galaxy[i] < void)
+            greater_than_void = sum(1 for galaxy in galaxies if galaxy[i] > void)
+            expansion_rate += less_than_void * greater_than_void
+    return expansion_rate
 
 
 def part_x(starmap, age):
     galaxies = get_galaxies(starmap)
-    expanded_galaxies = expand_galaxies(galaxies, age)
-
-    total = 0
-    for galaxy_a, galaxy_b in itertools.combinations(expanded_galaxies, 2):
-        distance = linalg.norm(array(galaxy_b) - array(galaxy_a), ord=1)
-        total += int(distance)
-    return total
+    base_distance = sum(int(norm(array(b) - array(a), ord=1)) for a, b in itertools.combinations(galaxies, 2))
+    expansion_rate = get_expansion_rate(galaxies)
+    return base_distance + (age - 1) * expansion_rate
