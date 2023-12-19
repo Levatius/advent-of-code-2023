@@ -2,6 +2,7 @@ import unittest
 
 from aocd import get_data
 
+import portion as p
 from src.day_19 import get_workflows_and_parts, part_1, part_2
 
 
@@ -46,8 +47,10 @@ class TestDay19(unittest.TestCase):
 
     def test__part_2_example(self):
         workflows, _ = get_example()
-        assert part_2(workflows) == 167409079868000
+        part_range = {category: p.closed(1, 4000) for category in "xmas"}
+        assert part_2(workflows, part_range) == 167409079868000
 
     def test__part_2_input(self):
         workflows, _ = get_input()
-        print(part_2(workflows))
+        part_range = {category: p.closed(1, 4000) for category in "xmas"}
+        print(part_2(workflows, part_range))
